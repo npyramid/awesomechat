@@ -3,10 +3,16 @@ services:
   apiserver:
     build: apiserver
     command: python server.py
+  front:
+    build: web
+    volumes:
+      - static:/front
   nginx:
     image: nginx
     ports:
       - 8044:8044
     volumes:
      - ./nginx.conf:/etc/nginx/nginx.conf:ro
-     - ./web:/web/:ro
+     - static:/front:ro
+volumes:
+  static:
